@@ -7,8 +7,12 @@ class User < ApplicationRecord
   has_many :books, dependent: :destroy
   # 9. 「」を「has_many :user」に変更。booksとuserの従属関係が違っている。
   #    アソシエーションに、「dependent: :destroy」を追加
+  
   has_many :favorites, dependent: :destroy
   #いいね機能のアソシエーション
+  
+  has_many :book_comments, dependent: :destroy
+  #コメント機能のアソシエーション
   
   attachment :profile_image, destroy: false
 
