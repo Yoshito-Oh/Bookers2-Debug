@@ -5,6 +5,9 @@ class BooksController < ApplicationController
     @book = Book.find(params[:id])
     @user = @book.user
     # 22. [@user=~~~]を追記。ユーザー情報をshowメソッドにも定義した
+    @book_comment = BookComment.new
+    #コメントのインスタンス変数を
+    @books = Book.all
   end
 
   def index

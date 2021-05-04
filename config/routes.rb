@@ -4,7 +4,9 @@ Rails.application.routes.draw do
   resources :users,only: [:show,:index,:edit,:update]
 
   resources :books do
+    resource :book_comments, only: [:create, :destroy]
     resource :favorites, only: [:create, :destroy]
+    #resource(単数形)  , :[モデル](複数形)
   end
 
   root 'homes#top'

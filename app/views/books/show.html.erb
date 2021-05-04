@@ -13,19 +13,74 @@
   		  <tr>
   		    <td>
   		      <%= link_to user_path(@book.user) do %>
-            <%= attachment_image_tag(@book.user, :profile_image, :fill, 100, 100, fallback: "no-image-icon.jpg") %><br>
+            <%= attachment_image_tag(@book.user, :profile_image, :fill, 100, 100, fallback: "no_image.jpg") %><br>
             <%= @book.user.name %>
             <% end %>
           </td>
           <td><%= link_to @book.title, book_path(@book) %></td>
           <td><%= @book.body %></td>
+          
           <% if @user.id == current_user.id %>
           <!--27. 投稿したユーザーとログインユーザが一致していたらー-->
           <td><%= link_to 'Edit', edit_book_path(@book), class: "btn btn-sm btn-success edit_book_#{@book.id}" %></td>
-          <td><%= link_to 'Destroy', book_path(@book), method: :delete, data: { confirm: '本当に消しますか？' }, class: "btn btn-sm btn-danger destroy_book_#{@book.id}"%></td>
+          <td>
+            <p>
+              <%= link_to 'Destroy', book_path(@book), method: :delete, data: { confirm: '本当に消しますか？' }, class: "btn btn-sm btn-danger destroy_book_#{@book.id}"%>
+            </p>
+          </td>
+          <% else %>
+          <td>
+            
+            <!--@booksは全部のbook情報を入れてしまっている-->
+              <% if @book.favorited_by?(current_user) %>
+                <p class="favorite-heart">
+                <%= link_to book_favorites_path(@book), method: :delete do %>
+                  ♥<%= @book.favorites.count %>
+                <% end %>
+                </p>
+              <% else %><!--いいねしていなければ-->
+                <p>
+                  <%= link_to book_favorites_path(@book), method: :post do %>
+                    ♡<%= @book.favorites.count %>
+                  <% end %>
+                </p>
+              <% end %>
+           
+          </td>
+          <td>
+            コメント数:<%= @book.book_comments.count %>
+          </td>
+          <% end %>
+          
+        </tr>
+      </table>
+      <table class="Comment-list">
+        <tr><!--投稿したコメントを表示するテーブル-->
+          <% @book.book_comments.each do |book_comment| %>
+          <!--@book=本のID。book_comments：モデル, each:並べる-->
+          <td>
+            <%= link_to user_path(book_comment.user) do %><!--投稿したユーザーのプロフィール画像のリンク、下は画像-->
+            <%= attachment_image_tag(book_comment.user, :profile_image, :fill, 100, 100, fallback: "no_image.jpg") %><br>
+            <%= book_comment.user.name %><!--投稿したユーザーネーム-->
+            <% end %>
+          </td>
+          <td>
+            <%= book_comment.comment %><!--投稿したコメントの内容-->
+          </td>
+          <td>
+            <%= link_to 'Destroy', book_book_comments_path(book_comment.book, book_comment), method: :delete , class: 'btn btn-danger'%>
+            <!--コメント消去　　※コメントのpathが「book_book_comment」のため-->
+            <!--旧：(@book)　⇒　(book_comment.book, book_comment)と記載する。（引数が2つのため）-->
+          </td>
           <% end %>
         </tr>
       </table>
+      <div class="Comment-form"><!--コメント投稿フォーム-->
+        <%= form_with(model:[@book, @book_comment], local: true) do |f| %>
+          <%= f.text_area :comment, rows: '5', :size => "90x5" %>
+          <%= f.submit "送信" %>
+        <% end %>
+      </div>
     </div>
   </div>
 </div>
