@@ -1,0 +1,29 @@
+<h2>Followers User</h2>
+<% if @users.blank? %><!--フォローしているユーザがいなければ-->
+<!--@userとしていた。@userは指定のユーザを探した結果なので、これがblankになることはありえない。
+@usersとすることで、フォローされている人全員を抽出した結果、blankだったらif以下に飛べる-->
+  <p>ユーザはいません</p>
+<% else %><!--そうでなければ-->
+  <table width="100%">
+    <thead>
+      <tr>
+        <th width="20%">image</th>
+        <th width="20%">name</th>
+        <th colspan="3", width="60%"></th>
+      </tr>
+    </thead>
+    <% @users.each do |user| %>
+    <tbody>
+      <tr>
+        <td><%= attachment_image_tag(user, :profile_image, :fill, 100,100, fallback: "no_image.jpg" )%></td>
+        <!--前：attachment_image_tag(following.user, :profile_image, :fill, 100,100, fallback: "no_image.jpg" )と記載してしまったためエラー
+        ()内の先頭にある『user』はブロック変数-->
+        <td><%= user.name %></td>
+        <td><p>フォロー数：</p><%= user.followings.count %></td><!--following『s』：複数形にすること-->
+        <td><p>フォロワー数：</p><%= user.followers.count %></td>
+        <td><%= link_to "Show", user_path %></td>
+      </tr>
+    </tbody>
+    <% end %>
+  </table>
+<% end %>

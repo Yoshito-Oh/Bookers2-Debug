@@ -8,7 +8,14 @@ Rails.application.routes.draw do
     resource :favorites, only: [:create, :destroy]
     #resource(単数形)  , :[モデル](複数形)
   end
-
+  
+  resources :users, only: [:show, :index, :edit, :update] do
+    member do
+      get :following, :followers
+    end
+    resource :relationships, only: [:create, :destroy]
+  end
+  
   root 'homes#top'
   get 'home/about' => 'homes#about'
 end
