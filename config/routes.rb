@@ -1,4 +1,5 @@
 Rails.application.routes.draw do
+  get 'searches/search'
   devise_for :users
   # devise_for : usersのshowページを探しに行くので、見つからないので無限に探しに行ってしまう。
   resources :users,only: [:show,:index,:edit,:update]

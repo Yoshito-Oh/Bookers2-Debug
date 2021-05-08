@@ -13,9 +13,9 @@
   <body>
     <%= render 'layouts/header' %>
       <main>
-        
+
         <p id="notice"><%= notice %></p>
-        
+        <%= render 'searches/search' %>
         <%= yield %>
         <!--5. 他のファイルを表示するのに必要なコード「%= yield %」を-->
       </main>

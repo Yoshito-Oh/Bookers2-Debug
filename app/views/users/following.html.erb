@@ -17,8 +17,8 @@
       <tr>
         <td><%= attachment_image_tag(user, :profile_image, :fill, 100,100, fallback: "no_image.jpg" )%></td>
         <td><%= user.name %></td>
-        <td><p>フォロー数：</p><%= user.followings.count %></td>
-        <td><p>フォロワー数：</p><%= user.followers.count %></td>
+        <td><p>フォロー数：<%= user.followings.count %></td>
+        <td>フォロワー数：<%= user.followers.count %></td>
         <td><%= link_to "Show", user_path %></td>
       </tr>
     </tbody>
