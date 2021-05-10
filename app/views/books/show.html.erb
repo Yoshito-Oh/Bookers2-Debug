@@ -29,23 +29,8 @@
             </p>
           </td>
           <% else %>
-          <td>
-
-            <!--@booksは全部のbook情報を入れてしまっている-->
-              <% if @book.favorited_by?(current_user) %>
-                <p class="favorite-heart">
-                <%= link_to book_favorites_path(@book), method: :delete do %>
-                  ♥<%= @book.favorites.count %>
-                <% end %>
-                </p>
-              <% else %><!--いいねしていなければ-->
-                <p>
-                  <%= link_to book_favorites_path(@book), method: :post do %>
-                    ♡<%= @book.favorites.count %>
-                  <% end %>
-                </p>
-              <% end %>
-
+          <td class="favorite-btn">
+            <%= render 'favorite/favorite-btn', book: @book %>
           </td>
           <td>
             コメント数:<%= @book.book_comments.count %>

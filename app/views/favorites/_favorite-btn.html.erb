@@ -1,0 +1,10 @@
+<% if book.favorited_by?(current_user) %>
+  <!--もし、ログインユーザーがいいねをしていたら-->
+  <%= link_to book.favorites.count, book_favorites_path(book), method: :delete, remote: true, class: "fas fa-heart heart_red", style: "color: red;"  %>
+  <!--(book)を取り消す(method: :delete)-->
+
+<% else%>
+  <%= link_to book.favorites.count, book_favorites_path(book), method: :post, remote: true, class: "far fa-heart heart_blue" %>
+  <!--(book)にいいねする(methodo: :post)-->
+<% end %>
+<!--※remote:trueで非同期通信処理を行う-->
