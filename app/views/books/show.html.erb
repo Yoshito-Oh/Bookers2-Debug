@@ -29,7 +29,7 @@
             </p>
           </td>
           <% else %>
-          <td class="favorite-btn">
+          <td class=<%="favorite-btn-#{book.id}"%>>
             <%= render 'favorite/favorite-btn', book: @book %>
           </td>
           <td>
@@ -39,34 +39,11 @@
 
         </tr>
       </table>
-      <table class="Comment-list">
-        <% @book.book_comments.each do |book_comment| %>
-          <!--@book=本のID。book_comments：モデル, each:並べる-->
-        <tr><!--投稿したコメントを表示するテーブル-->
-
-          <td>
-            <%= link_to user_path(book_comment.user) do %><!--投稿したユーザーのプロフィール画像のリンク、下は画像-->
-            <%= attachment_image_tag(book_comment.user, :profile_image, :fill, 100, 100, fallback: "no_image.jpg") %><br>
-            <%= book_comment.user.name %><!--投稿したユーザーネーム-->
-            <% end %>
-          </td>
-          <td>
-            <%= book_comment.comment %><!--投稿したコメントの内容-->
-          </td>
-          <td>
-            <% if book_comment.user == current_user %>
-              <!--27. 投稿したユーザーとログインユーザが一致していたらー-->
-              <%= link_to 'Destroy', book_book_comment_path(@book, book_comment), method: :delete , class: 'btn btn-danger'%>
-              <!--コメント消去　　※コメントのpathが「book_book_comment」のため-->
-              <!--旧：(@book)　⇒　(book_comment.book, book_comment)と記載する。（引数が2つのため）-->
-            <% end %>
-          </td>
-          <br />
-        </tr>
-        <% end %>
+      <table class="book_comments">
+        <%= render 'book_comments/comment', book: @book %>
       </table>
       <div class="Comment-form"><!--コメント投稿フォーム-->
-        <%= form_with(model:[@book, @book_comment], local: true) do |f| %>
+        <%= form_with(model:[@book, @book_comment], remote: true) do |f| %>
           <%= f.text_area :comment, rows: '5', :size => "90x5" %>
           <%= f.submit "送信" %>
         <% end %>
