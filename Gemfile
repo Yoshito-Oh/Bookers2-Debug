@@ -67,5 +67,7 @@ gem "refile-mini_magick"
 gem 'bootstrap', '~> 4.5' #4. bootstrapのGemを追加⇒bundle
 gem 'jquery-rails'
 gem 'font-awesome-sass', '~> 5.13'
+gem 'jquery-rails'
+gem 'jp_prefecture'
 
 gem 'pry-rails'
